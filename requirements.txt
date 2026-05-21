@@ -1,0 +1,21 @@
+# Core AI module deps
+numpy==2.3.5
+pydantic==2.12.5
+
+# SE layer
+fastapi==0.124.0
+uvicorn[standard]==0.38.0
+python-multipart==0.0.20
+pydantic-settings==2.12.0
+httpx==0.28.1
+asyncpg==0.30.0
+openai==2.14.0
+
+# Testing
+pytest==9.0.3
+pytest-asyncio==1.3.0
+pytest-cov==7.0.0
+
+# Optional providers
+google-genai==1.55.0
+anthropic==0.75.0

@@ -1,0 +1,7 @@
+.env
+.env.docker
+.DS_Store
+__pycache__/
+*.pyc
+lostfound.json
+.coverage

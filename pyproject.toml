@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "--tb=short -q"
+log_cli = false
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["*/test*", "*/__pycache__/*"]
