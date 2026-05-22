@@ -1,4 +1,3 @@
-"""Unit tests for the storage / repository layer."""
 
 from __future__ import annotations
 

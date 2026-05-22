@@ -1,7 +1,3 @@
-"""Typed configuration layer — reads from .env via pydantic-settings.
-
-All secrets come from environment variables; nothing is hardcoded here.
-"""
 
 from __future__ import annotations
 
@@ -15,7 +11,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    """Application-wide settings loaded from environment / .env file."""
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -75,12 +70,10 @@ class Settings(BaseSettings):
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
-    """Return the singleton Settings instance (cached after first call)."""
     return Settings()
 
 
 def configure_logging(settings: Settings | None = None) -> None:
-    """Configure the root logger from settings."""
     cfg = settings or get_settings()
     logging.basicConfig(
         level=cfg.log_level,

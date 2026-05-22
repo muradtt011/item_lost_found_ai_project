@@ -1,14 +1,4 @@
-"""Matching service — orchestrates item registration and top-k retrieval.
 
-This is the core business-logic component. It composes:
-- Validation layer (image checks)
-- Storage layer (repository)
-- AI service (describe + embed)
-- ai.similarity.top_k for ranking
-
-Class hierarchy: MatchingService (composition over inheritance) delegates
-storage to ItemRepository and AI calls to AIService.
-"""
 
 from __future__ import annotations
 
@@ -29,7 +19,6 @@ logger = logging.getLogger(__name__)
 
 
 class MatchingService:
-    """Orchestrates item registration, storage, and similarity-based matching."""
 
     def __init__(
         self,
@@ -51,22 +40,7 @@ class MatchingService:
         image_path: str | Path,
         user_text: str = "",
     ) -> ItemRecord:
-        """Validate, describe, embed and store a lost or found item.
-
-        Parameters
-        ----------
-        status:
-            Whether this is a ``lost`` or ``found`` item.
-        image_path:
-            Path to the uploaded image file (already on disk).
-        user_text:
-            Optional user-supplied description.
-
-        Returns
-        -------
-        ItemRecord
-            The persisted record with VLM description and embedding filled in.
-        """
+        
         user_text = validate_user_text(user_text)
         validated_path = validate_image(image_path, settings=self._cfg)
 
@@ -108,29 +82,7 @@ class MatchingService:
         item_id: str,
         k: int = 3,
     ) -> MatchResponse:
-        """Return the top-k matching items from the opposite pool.
-
-        Lost items are matched against the found pool and vice versa.
-
-        Parameters
-        ----------
-        item_id:
-            ID of the query item.
-        k:
-            Number of matches to return.
-
-        Returns
-        -------
-        MatchResponse
-            Query item ID plus list of ranked MatchDetail objects.
-
-        Raises
-        ------
-        ItemNotFoundError
-            If *item_id* does not exist.
-        MatchingError
-            If the query item has no embedding.
-        """
+        
         if k <= 0:
             raise ValueError("k must be a positive integer")
 

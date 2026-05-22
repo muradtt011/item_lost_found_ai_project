@@ -1,21 +1,3 @@
-"""AI service wrapper — adds retries, timeouts, caching, logging, and rate-limiting.
-
-This is the SE layer that sits between the application code and the raw ai.*
-calls. It never modifies the ai/ package; it just decorates calls with
-production-grade concerns.
-
-Design choices
---------------
-- Uses ``asyncio`` + ``run_in_executor`` to call the synchronous ai.* functions
-  from async contexts without blocking the event loop.
-- ``asyncio.Semaphore`` limits concurrent AI calls (rate-limit protection).
-- Exponential back-off retries via a simple hand-rolled loop (avoids the
-  ``tenacity`` dependency, keeping requirements lean).
-- Embedding results are cached by text content (deterministic embeddings).
-- All failures are wrapped in ``AIServiceError`` to give callers a uniform
-  error type.
-"""
-
 from __future__ import annotations
 
 import asyncio
@@ -38,7 +20,6 @@ logger = logging.getLogger(__name__)
 
 
 class AIService:
-    """Async wrapper around ai.describe_item, ai.embed, and ai.similarity.*"""
 
     def __init__(
         self,
@@ -63,18 +44,7 @@ class AIService:
     # ------------------------------------------------------------------
 
     async def describe_item(self, image_path: str, user_text: str) -> ItemDescription:
-        """Describe an item using the VLM, with retries and timeout.
 
-        Returns
-        -------
-        ItemDescription
-            Validated structured description.
-
-        Raises
-        ------
-        AIServiceError
-            After all retries are exhausted or a non-retryable error occurs.
-        """
         logger.info("describe_item: %s | text=%r", image_path, user_text[:60])
         return await self._with_retry(
             "describe_item",
@@ -84,13 +54,7 @@ class AIService:
         )
 
     async def embed(self, text: str) -> np.ndarray:
-        """Return a unit-normalised embedding, using cache for identical texts.
 
-        Raises
-        ------
-        AIServiceError
-            After all retries are exhausted.
-        """
         cache_key = hashlib.sha256(text.encode()).hexdigest()
         if cache_key in self._embed_cache:
             logger.debug("embed cache hit for key %s", cache_key[:8])
@@ -126,15 +90,6 @@ class AIService:
     # ------------------------------------------------------------------
 
     async def _with_retry(self, name: str, fn: Any) -> Any:
-        """Run *fn* in a thread-pool with timeout + exponential back-off.
-
-        Parameters
-        ----------
-        name:
-            Human-readable call name for logging.
-        fn:
-            A zero-argument callable wrapping the actual ai.* call.
-        """
         loop = asyncio.get_running_loop()
         last_exc: Exception | None = None
         max_retries = self._cfg.ai_max_retries

@@ -1,4 +1,4 @@
-"""Concurrency tests for BatchPipeline."""
+
 
 from __future__ import annotations
 

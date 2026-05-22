@@ -1,4 +1,3 @@
-"""Happy-path end-to-end test using FastAPI TestClient and mocked AI."""
 
 from __future__ import annotations
 

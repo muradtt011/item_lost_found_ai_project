@@ -1,8 +1,3 @@
-"""Image and request validation.
-
-All validation failures raise subclasses of LostFoundError so the API
-layer can map them to clean HTTP 4xx responses without leaking stack traces.
-"""
 
 from __future__ import annotations
 

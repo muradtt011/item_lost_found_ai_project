@@ -19,8 +19,7 @@ class ItemStatus(str, Enum):
 # ---------------------------------------------------------------------------
 
 class ItemRecord(BaseModel):
-    """A persisted lost-or-found item with all metadata."""
-
+    
     model_config = ConfigDict(extra="forbid")
 
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -35,7 +34,6 @@ class ItemRecord(BaseModel):
 
     @property
     def description_text(self) -> str:
-        """Flat text derived from VLM output, or fallback to user text."""
         if self.vlm_description:
             object_class = self.vlm_description.get("object_class", "")
             colors = ", ".join(self.vlm_description.get("colors", []))
@@ -51,7 +49,6 @@ class ItemRecord(BaseModel):
 # ---------------------------------------------------------------------------
 
 class RegisterItemRequest(BaseModel):
-    """Sent by the client when registering a lost or found item (multipart handled separately)."""
 
     model_config = ConfigDict(extra="ignore")
 
@@ -59,7 +56,6 @@ class RegisterItemRequest(BaseModel):
 
 
 class MatchDetail(BaseModel):
-    """One entry in a match list."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -74,7 +70,6 @@ class MatchDetail(BaseModel):
 
 
 class MatchResponse(BaseModel):
-    """Response for GET /items/{id}/matches."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -83,7 +78,6 @@ class MatchResponse(BaseModel):
 
 
 class ItemResponse(BaseModel):
-    """Response shape for a single item."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -107,7 +101,7 @@ class ItemResponse(BaseModel):
 
 
 class ItemListResponse(BaseModel):
-    """Response shape for GET /items."""
+
 
     model_config = ConfigDict(extra="forbid")
 
@@ -116,7 +110,6 @@ class ItemListResponse(BaseModel):
 
 
 class ErrorResponse(BaseModel):
-    """Uniform error payload — no raw stack traces exposed."""
 
     model_config = ConfigDict(extra="forbid")
 

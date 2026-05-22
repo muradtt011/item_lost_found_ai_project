@@ -1,16 +1,3 @@
-"""scripts/demo.py — Full scripted demo for Smart Lost & Found.
-
-Registers sample lost and found items using the backend MatchingService
-(not directly against ai/), queries matches for the first lost item, and
-prints top-3 matches with scores and VLM reasoning.
-
-Writes a JSON artefact to artefacts/demo_results.json.
-
-Usage
------
-    python scripts/demo.py --offline       # no API keys needed
-    python scripts/demo.py                 # uses real providers from .env
-"""
 
 from __future__ import annotations
 
