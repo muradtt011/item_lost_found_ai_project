@@ -1,14 +1,3 @@
-"""FastAPI application — Smart Lost & Found HTTP API.
-
-Endpoints
----------
-POST  /items/lost             Register a lost item (multipart image + text)
-POST  /items/found            Register a found item (multipart image + text)
-GET   /items/{id}/matches     Get top-k matches for an item
-GET   /items                  List items (filter by status)
-
-All error responses use the ErrorResponse model; no raw tracebacks.
-"""
 
 from __future__ import annotations
 
@@ -53,7 +42,6 @@ settings = get_settings()
 
 @contextlib.asynccontextmanager
 async def _lifespan(app: FastAPI):
-    """Connect PostgreSQL pool at startup; close it at shutdown."""
     repo = make_repository(database_url=settings.database_url)
     ai_service = AIService(settings=settings)
     matching = MatchingService(

@@ -1,11 +1,3 @@
-"""Async batch-processing pipeline.
-
-Provides ``BatchPipeline`` — a concurrency helper that:
-- accepts a list of async tasks
-- runs them with bounded parallelism via asyncio.Semaphore
-- returns results in input order
-- isolates failures: one task error does not crash the whole batch
-"""
 
 from __future__ import annotations
 

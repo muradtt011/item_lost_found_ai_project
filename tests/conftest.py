@@ -1,8 +1,3 @@
-"""Shared pytest fixtures for offline tests.
-
-The fakes live here so both the AI smoke tests and student-written
-tests can reuse them without network calls.
-"""
 
 from __future__ import annotations
 

@@ -41,7 +41,6 @@ CREATE TABLE IF NOT EXISTS items (
 # ---------------------------------------------------------------------------
 
 class ItemRepository(ABC):
-    """Abstract repository; every method is a coroutine."""
 
     @abstractmethod
     async def save(self, item: ItemRecord) -> ItemRecord:
@@ -66,11 +65,6 @@ class ItemRepository(ABC):
         """Remove an item; raises ItemNotFoundError if absent."""
 
     async def store_image(self, source_path: Path, storage_dir: Path) -> Path:
-        """Copy *source_path* into *storage_dir*, returning the destination.
-
-        Image blobs are always stored on the filesystem regardless of which
-        metadata backend is in use.
-        """
         storage_dir.mkdir(parents=True, exist_ok=True)
         dest = storage_dir / source_path.name
         if dest.exists():
@@ -95,7 +89,6 @@ class PostgreSQLRepository(ItemRepository):
         self._pool: Any = None  # asyncpg.Pool (imported lazily)
 
     async def connect(self) -> None:
-        """Open the connection pool and create the table if it doesn't exist."""
         try:
             import asyncpg  # noqa: PLC0415 — lazy import
         except ModuleNotFoundError as exc:
@@ -115,7 +108,6 @@ class PostgreSQLRepository(ItemRepository):
                     self._min_size, self._max_size)
 
     async def close(self) -> None:
-        """Close the connection pool."""
         if self._pool is not None:
             await self._pool.close()
             self._pool = None

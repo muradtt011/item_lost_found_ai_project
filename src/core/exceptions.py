@@ -1,8 +1,4 @@
-"""Custom exceptions for the Smart Lost & Found backend.
 
-All public exceptions live here so callers can import from a single place
-without creating circular dependencies.
-"""
 
 from __future__ import annotations
 
