@@ -1,20 +1,20 @@
 {
-  "run_at": "2026-05-20T14:49:43.926286+00:00",
+  "run_at": "2026-05-23T18:19:41.067783+00:00",
   "mode": "online",
-  "query_lost_item": "umbrella_black.png",
-  "query_text": "umbrella | colors: black, brown | marks: curved handle, scalloped edge",
+  "query_lost_item": "wallet_brown.png",
+  "query_text": "wallet | colors: brown",
   "matches": [
     {
-      "found_item": "umbrella_black_2.png",
-      "score": 0.7124015092849731
-    },
-    {
-      "found_item": "book_green.png",
-      "score": 0.40911853313446045
+      "found_item": "wallet_brown_2.png",
+      "score": 0.9999999403953552
     },
     {
       "found_item": "backpack_navy_2.png",
-      "score": 0.3830280900001526
+      "score": 0.5429822206497192
+    },
+    {
+      "found_item": "umbrella_black_2.png",
+      "score": 0.5426989197731018
     }
   ]
 }

@@ -122,7 +122,7 @@ class MatchingService:
             details.append(
                 MatchDetail(
                     item_id=candidate.id,
-                    score=float(m.score),
+                    score=float(np.clip(m.score,-1,1)),
                     reason=reason,
                     status=candidate.status,
                     user_text=candidate.user_text,

@@ -143,7 +143,7 @@ def run_demo(offline: bool) -> None:
         print("\nNo items processed; nothing to match.", file=sys.stderr)
         sys.exit(2)
 
-    query_name, query_vec, query_text = lost[3]
+    query_name, query_vec, query_text = lost[4]
     cand_vecs = [v for (_, v, _) in found]
     cand_names = [n for (n, _, _) in found]
     matches = top_k(query_vec, cand_vecs, k=min(3, len(found)))
